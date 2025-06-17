@@ -1,32 +1,34 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const rateLimit = require("express-rate-limit"); // Corregido: era "rateimit"
+const rateLimit = require("express-rate-limit");
 require("dotenv").config();
-const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
-const routes = require("./routes/apiRoutes");
+
+// Importa tus middlewares y rutas
+const { errorHandler, notFound } = require("../middlewares/errorMiddleware");
+const routes = require("../routes/apiRoutes");
 
 const app = express();
-app.use(helmet());
 
 // Variables de entorno con valores por defecto
 const API_VERSION = process.env.API_VERSION || 'v1';
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PORT = process.env.PORT || 3000;
+
+app.use(helmet());
 
 // CORS middleware
 app.use(
   cors({
     origin:
       NODE_ENV === "production"
-        ? ["https://your-frontend-domain.com"]
+        ? ["https://your-frontend-domain.com", "https://your-vercel-domain.vercel.app"]
         : ["http://localhost:5173", "http://localhost:3000"],
     credentials: true,
   })
 );
 
 // Rate limiting
-const limiter = rateLimit({ // Corregido: era "rateimit"
+const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: NODE_ENV === "production" ? 100 : 1000,
   message: {
@@ -40,9 +42,7 @@ app.use(limiter);
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// API routes
-app.use(`/api/${API_VERSION}`, routes);
-
+// Root route
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -58,23 +58,12 @@ app.get("/", (req, res) => {
   });
 });
 
+// API routes
+app.use(`/api/${API_VERSION}`, routes);
+
 // Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server
-const server = app.listen(PORT, () => {
-  console.log(`🚀 Punto Sabor API server running on port ${PORT}`);
-  console.log(`📍 Environment: ${NODE_ENV}`);
-  console.log(`🔗 API Base URL: http://localhost:${PORT}/api/${API_VERSION}`);
-});
-
-// Handle unhandled promise rejections
-process.on("unhandledRejection", (err, promise) => {
-  console.log(`Error: ${err.message}`);
-  server.close(() => {
-    process.exit(1);
-  });
-});
-
-module.exports = app; // Importante para Vercel
+// Export for Vercel
+module.exports = app;
