@@ -12,7 +12,7 @@ import {
   Calendar,
   ExternalLink,
 } from "lucide-react";
-import "./Home.css";
+import "./home.css";
 
 const Homepage = () => {
   const [searchTerm, setSearchTerm] = useState("");
