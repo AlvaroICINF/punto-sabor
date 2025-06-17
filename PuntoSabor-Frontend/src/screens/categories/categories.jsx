@@ -12,7 +12,7 @@ import {
   Cake,
   Package,
 } from "lucide-react";
-import "./Categories.css";
+import "./categories.css";
 
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
