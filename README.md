@@ -53,13 +53,6 @@ Almacena los platos de cada restaurante:
 - `createdAt`: Fecha de creación
 - `updatedAt`: Fecha de actualización
 
-### Colección `users`
-Almacena la información de los usuarios:
-- `uid`: Identificador único del usuario
-- `name`: Nombre del usuario
-- `email`: Correo electrónico
-- `role`: Rol del usuario (user/admin)
-- `createdAt`: Fecha de creación
 
 ## Uso de Inteligencia Artificial en el Desarrollo
 
