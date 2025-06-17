@@ -23,9 +23,9 @@ const Restaurants = () => {
   const [sortBy, setSortBy] = useState("name");
   const [mockRestaurants, setMockRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); // Nuevo estado para el término de búsqueda
-  const [showOnlyWithWebsite, setShowOnlyWithWebsite] = useState(true); // Nuevo estado para filtrar por sitio web, por defecto true
-
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [showOnlyWithWebsite, setShowOnlyWithWebsite] = useState(true); 
+  
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {

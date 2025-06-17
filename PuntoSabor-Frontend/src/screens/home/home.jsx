@@ -11,6 +11,7 @@ import {
   Package,
   Calendar,
   ExternalLink,
+  ChefHat
 } from "lucide-react";
 import "./home.css";
 
@@ -18,21 +19,26 @@ const Homepage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [mockRestaurants, setMockRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const restaurants = await getRestaurants();
-        setMockRestaurants(restaurants.data);
-
-        console.log("Restaurantes obtenidos:", restaurants.data);
-      } catch (err) {
-        console.error("Error al obtener restaurantes:", err);
-      }
-    };
-
-    fetchRestaurants();
-  }, []);
+      const fetchRestaurants = async () => {
+        try {
+          setLoading(true);
+          const restaurants = await getRestaurants();
+  
+          setMockRestaurants(restaurants.data);
+  
+          console.log("Restaurantes obtenidos:", restaurants);
+        } catch (err) {
+          console.error("Error al obtener restaurantes:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchRestaurants();
+    }, []);
 
   // Función para generar URL de Google Maps
   const getGoogleMapsUrl = (address) => {
@@ -89,6 +95,77 @@ const Homepage = () => {
     });
     return icons;
   };
+
+  if (loading) {
+    return (
+      <div className="homepage">
+      <div className="hero">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            Encuentra tu <span className="highlight-text">plato favorito</span>
+          </h1>
+          <p className="hero-subtitle">
+            Descubre los mejores restaurantes y sus especialidades cerca de ti
+          </p>
+          <div className="search-box">
+            <Search className="search-icon" />
+            <input
+              type="text"
+              placeholder="Busca tu plato favorito... ej: papas fritas, cazuela, empanadas"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+          <div className="suggestions">
+            {[
+              "papas fritas",
+              "cazuela",
+              "empanadas",
+              "lomo",
+              "pastel de choclo",
+              "mariscos",
+            ].map((suggestion) => (
+              <button
+                key={suggestion}
+                onClick={() => setSearchTerm(suggestion)}
+                className="suggestion-btn"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="decor-circle decor-yellow"></div>
+        <div className="decor-circle decor-green"></div>
+      </div>
+
+        <div className="restaurants-loader">
+          <div className="loader-container">
+            <div className="loader-animation">
+              <div className="loader-circle"></div>
+              <div className="loader-circle"></div>
+              <div className="loader-circle"></div>
+              <ChefHat className="loader-icon" />
+            </div>
+
+            <div className="loader-text">
+              <h3 className="loader-title">Cargando Platillos</h3>
+              <p className="loader-subtitle">
+                Encontrando los mejores lugares para ti...
+              </p>
+
+              <div className="loader-dots">
+                <div className="loader-dot"></div>
+                <div className="loader-dot"></div>
+                <div className="loader-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="homepage">
