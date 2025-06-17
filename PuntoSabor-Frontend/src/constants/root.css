@@ -1,0 +1,19 @@
+:root {
+  --primary-color: #ff6b6b; /* Un rojo anaranjado vibrante y apetitoso */
+  --secondary-color: #4a4a4a; /* Un gris oscuro para texto y elementos secundarios */
+  --tertiary-color: #ffd166; /* Un amarillo suave como color de apoyo o para destacar */
+  --accent-color: #06d6a0; /* Un verde menta fresco para acentos y llamadas a la acción */
+  --text-color: #2d2d2d; /* Un gris casi negro para la máxima legibilidad */
+  --background: #fff8f0; /* Un fondo de color crema/hueso claro, cálido y limpio */
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #ff8e53 100%
+  ); /* Gradiente cálido y enérgico */
+  --gradient-accent: linear-gradient(
+    135deg,
+    #06d6a0 0%,
+    #118ab2 100%
+  ); /* Gradiente fresco y moderno */
+}
