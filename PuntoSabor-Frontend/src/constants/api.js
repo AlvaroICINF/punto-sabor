@@ -6,7 +6,7 @@ const API_BASE_URL = "https://punto-sabor-backend.vercel.app/api/v1";
 // Crear instancia de axios
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: 20000,
   headers: {
     "Content-Type": "application/json",
   },
